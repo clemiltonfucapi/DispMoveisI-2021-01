@@ -223,7 +223,7 @@ String nome1,nome2;
 - O método recebe como parâmetro um outro objeto do tipo String (`nome2`)
 
 #
-## Exercício: [Exercício 01.pdf](Exercicios.pdf) - Até  22/10/20 ,19:40
+## Exercício: [Exercício 01.pdf](Exercicios.pdf)
 
 # Referências
 - http://pedrofcarvalho.com.br/wp/wp-content/uploads/2016/08/Introduação-à-Linguagem-Java-Slides.pdf
