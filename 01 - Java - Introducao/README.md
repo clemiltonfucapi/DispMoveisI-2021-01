@@ -1,4 +1,5 @@
 # Aula 01 - 12/05/21
+
 ## Linguagem Java
 - A Linguagem Java é usada para desenvolver aplicativos para uma ampla variedade de ambientes: Dispositivos móveis, Sistemas WEB, Aplicações Corporativas, Sistemas Embarcados.
 - É uma linguagem Orientada a Objetos
