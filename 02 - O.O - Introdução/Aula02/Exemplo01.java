@@ -1,6 +1,7 @@
 package Aula02;
+
 import Aula02.classes.Estudante;
-public class Exemplo04 {
+public class Exemplo01 {
     public static void main(String[] args) {
         double[] n1 = {5,7,8};
         double[] n2 = {8,9,5};

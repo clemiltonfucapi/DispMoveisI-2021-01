@@ -1,10 +1,27 @@
 # Aula 02 - 22/10/20
 ## Paradigma Orientado a Objetos
 ![Images](imgs/slide01.png)
-
-## Exemplo04.java : Criação de classes
-
-### Neste exemplo, vamos criar uma classe **Estudante.java** que será utilizado por outro arquivo **Exemplo04.java**
+#
+## Conceitos de Orientação a Objetos
+![Images](imgs/slide02.png)
+#
+## Exemplos de objetos
+![Images](imgs/slide03.png)
+#
+## Classe
+![Images](imgs/slide04.png)
+#
+## Objeto
+![Images](imgs/slide05.png)
+#
+## Notação UML
+![Images](imgs/slide06.png)
+#
+## Exemplo Classe-Objeto
+![Images](imgs/slide07.png)
+# 
+## Exemplo01.java : Criação de classes
+- Neste exemplo, vamos criar uma classe **Estudante.java** que será utilizado por outro arquivo **Exemplo04.java**
 ```java
 //Aula01/classes/Estudante.java
 package Aula02.classes;
@@ -39,7 +56,7 @@ public class Estudante {
 ```
 <p align="center"><b>Estudante.java</b></p>
 
-### 1. Definição da classe e dos atributos
+### Definição da classe e dos atributos
 ```java
 public class Estudante {
     private String matricula;
@@ -93,7 +110,7 @@ public class Estudante {
 ```java
 package Aula02;
 import Aula02.classes.Estudante;
-public class Exemplo04 {
+public class Exemplo02 {
     public static void main(String[] args) {
         double[] n1 = {5,7,8};
         double[] n2 = {8,9,5};  
@@ -119,12 +136,12 @@ public class Exemplo04 {
 ```java
 package Aula02;
 import Aula02.classes.Estudante;
-public class Exemplo04 {
+public class Exemplo02 {
     public static void main(String[] args) {
         ...
 ```
 - Nesta parte foi definido o pacote e importada a classe Estudante. Isto só foi possível, pois a classe `Estudante` é pública.
-- Observe que foi declarado o método main(). Logo a classe a ser executada é `Exemplo04`
+- Observe que foi declarado o método main(). Logo a classe a ser executada é `Exemplo01`
 
 ### 7. Instanciando objetos
 ```java
@@ -205,7 +222,7 @@ public class Exemplo04 {
 
 ### Caso adicionemos uma nova instância, o valor do atributo estático será mudado.
 ```java   
-    //Exemplo04.java
+    //Exemplo01.java
     ...
     ->  double[] n3 = {6,6,6};
         Estudante e1 = new Estudante("111","Matheus",n1);
@@ -260,17 +277,187 @@ public static void main(String[] args) {
 - Porém o objeto `e6`, ainda será instanciado, apenas seus valores que não terão valores.
 - Podemos resolver esse problema através de um método estático. Vamos ver isso mais na frente.
 
-## Exercício 02
-### 1. Faça uma classe `Conta` que implemente o seguinte diagrama de classe, e obedeça os itens a seguir:
+## Exemplo 02
+### 1. Vamos fazer um classe `Conta` que implemente o seguinte diagrama de classe
 <img src="imgs/conta.png" >
 
+### A classe de seguir as seguintes funcionalidades:
 - Os atributos são privados e métodos são públicos
 - O atributo MAX_SAQUE é uma constante estática, e recebe valor 1000.
 - O método construtor(`Conta()`), é responsável por iniciar os atributos.
+- - O método `getSaldo()`, retorna o saldo atual da conta.
 - O método `saca(valor)`, diminui o saldo da conta. Caso o valor seja maior que o saldo, retorne uma mensagem de aviso.
 - O método `deposita(valor)`, acrescenta um saldo na conta.
 - O método `compraCartao(valor)`, diminui o limite do cartão. Caso a compra for maior que o limite, retorne uma mensagem de aviso.
 - O método `transferePara()`, realiza a tranferência de uma conta para outra. Ex: `c1.transferePara(c2,200)` -> `c1` e `c2` são contas. `c1` realiza uma transferência de 200 R$ para `c2`.
-- O método `imprime()`, imprime as informações de uma conta no console
-- O método `getSaldo()`, retorna o saldo atual da conta.
 - Crie um arquivo `Exercício02.java` e realize a transferência entre 02 contas.
+
+### Vamos começar fazendo a classe Conta
+- Crie um arquivo em ``Aula02/classes/Conta.java``
+    ```java
+    package Aula02.classes;
+
+    public class Conta {
+        //atributos
+        private String nome;
+        private String cpf;
+        private double saldo;
+        private int limiteCartao;
+        //constante
+        public static final int MAX_SAQUE = 3000;
+
+        //Construtor
+        public Conta(String nome,String cpf,double saldo, int limiteCartao){
+            this.nome=nome;
+            this.cpf=cpf;
+            this.saldo = saldo;
+            this.limiteCartao=limiteCartao;
+        }
+        public double getSaldo(){
+            return this.saldo;
+        }
+        //método saca()
+        public void saca(double valor){
+            this.saldo -= valor;
+        }
+    
+    }
+    ```
+- Agora vamos criar um arquivo com o método ``main()`` para testar esta conta:
+    ```java
+    package Aula02;
+
+    import Aula02.classes.Conta;
+
+    class Exemplo02 {
+    public static void main(String[] args) {
+        Conta c1 = new Conta("Andre","22222222",3235.57,10000);
+        System.out.println("Saldo: "+c1.getSaldo());
+        c1.saca(2500);
+        System.out.println("Saldo depois saque: "+c1.getSaldo());
+        
+    }
+    }
+    ```
+    - Resultado: ![Images](imgs/img03.png)
+- Porém este método tem um problema. Caso fizermos um novo saque de 1000:
+    ```java
+    .....
+        Conta c1 = new Conta("Andre","22222222",3235.57,10000);
+        System.out.println("Saldo: "+c1.getSaldo());
+        c1.saca(2500);
+        System.out.println("Saldo depois saque: "+c1.getSaldo());
+        c1.saca(1000);
+        System.out.println("Saldo depois saque: "+c1.getSaldo());
+    ```
+    - Resultado: ![Images](imgs/img04.png). Conta esta com saldo negativo!
+- Refatorando o método ``saca()``
+    ```java
+    public class Conta(....){
+    .....
+    //método saca()
+    public void saca(double valor){
+        if(valor > this.saldo){
+            System.out.println("Não há saldo disponível para este valor");
+            return;
+        }
+        this.saldo -= valor;
+    }
+    ....
+    }
+    ```
+    - Executando novamente o código: ![Images](imgs/img05.png)
+- Vamos ajustar o método ``saca()`` para verificar valor máximo de saque:
+    ```java
+    public class Conta(....){
+    .....
+    //método saca()
+    public void saca(double valor){
+        if(valor> MAX_SAQUE){
+            System.out.println("Valor máximo para saque: R$ "+MAX_SAQUE);
+            return;
+        }
+        if(valor > this.saldo){
+            System.out.println("Não há saldo disponível para este valor");
+            return;
+        }
+        this.saldo -= valor;
+    }
+    ....
+    }
+    ```
+- Agora vamos fazer o método para ``deposita(valor)``
+```java
+  public void deposita(double valor){
+	if(valor < 0){
+      System.out.println("Valor inválido para depósito!");
+      return;
+    }
+    this.saldo+=valor;
+  }
+```
+- Modifique a classe principal
+```java
+public static void main(String[] args) {
+    Conta c1 = new Conta("Andre","22222222",3235.57,10000);
+    System.out.println("Saldo: "+c1.getSaldo());
+    c1.deposita(2000);
+    System.out.println("Saldo depois deposito: "+c1.getSaldo());
+   	c1.deposita(-2000);
+  }
+```
+- Método ``compraCartao(valor)``:
+    ```java
+    public void compraCartao(double valor){
+        if(valor < this.limiteCartao){
+            System.out.println("Não há saldo para esta compra!");
+            return;
+        }
+        this.limiteCartao -=valor;
+    }
+    ```
+- Método ``transferePara()``
+    ```java
+    public void transferePara(Conta contaDestino, double valor){
+        if(valor < 0){
+            System.out.println("Valor inválido!");
+            return;
+        }
+        if(valor > this.saldo){
+            System.out.println("Saldo Insuficiente!");
+            return;
+        }
+        //realiza saque
+        this.saca(valor);
+        //deposito na conta destino
+        contaDestino.deposita(valor);
+    }
+    ```
+- Criar um método ``toString()``
+    ```java
+    @Override
+    public String toString() {
+        return "Nome: " + this.nome + "\n"+
+                "CPF: " + this.cpf + "\n" +
+                "Saldo: "+ this.saldo + "\n"+
+                "limiteCartao: "+ this.limiteCartao + "\n";
+    }
+    ```
+- Refatorar a classe ``Exemplo02.java``
+```java
+public class Exemplo02 {
+    public static void main(String[] args) {
+        Conta c1 = new Conta("Andre","22222222",3235.57,10000);
+        Conta c2 = new Conta("Beatriz","323232",4500,10000);
+        
+        c1.transferePara(c2, 500);
+        System.out.println(c1);
+        System.out.println(c2); 
+    }
+}
+
+```
+- Resultado final: ![Images](imgs/img07.png)
+
+
+
