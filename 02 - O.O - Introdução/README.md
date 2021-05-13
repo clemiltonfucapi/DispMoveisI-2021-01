@@ -461,7 +461,7 @@ public class Exemplo02 {
 
 
 #
-## Exercício: [Exercicio02.pdf](Exercicio02)
+## Exercício: [Exercicio02.pdf](Exercicio02.pdf)
 
 
 
