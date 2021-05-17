@@ -1,6 +1,8 @@
 # Classes e Herança
-- ![Images](imgs/slide01.png)
+![Images](imgs/slide01.png)
 
+# Classe Object
+![Images](imgs/slide02.png)
 - Vamos implementar o seguinte modelo:
 <center><img src="imgs/heranca.png" ></center>
 
@@ -233,8 +235,9 @@ public class Main {
 - Um funcionário foi instanciado e mostrado os seus valores.
 - Observe na saída, que os atributos de pessoa também são iniciados.
 # Classes abstratas
-- As classes abstratas servem como “modelo” para outras classes. Informam como as classes devem se informam. 
+- As classes abstratas servem como “modelo” para outras classes. Informam como as classes devem se comportar. Definem atributos e métodos.
 - Classes abstratas são classes que NÃO PODEM SER INSTACIADAS.
+- Classes derivadas DEVEM implementar os métodos abstratos.
 - Identificamos uma classe como abstrata pelo modificador `abstract`.
 ## Exemplo
 <center><img src="imgs/heranca.png" ></center>
@@ -339,7 +342,139 @@ public class Main {
 ```
 - Obtemos como saída: ![Image](imgs/shell01.png)
 
+# Herança Múltipla
+![Images](imgs/slide03.png)
 # Interfaces
-- Fornecem uma especificação sem uma implementação. 
-- Interfaces são totalmente abstratas
-- Suportam polimorfismo
+![Images](imgs/slide04.png)
+# Exemplo Interfaces
+- A Interface é muito utilizada em grandes projetos para obrigar o programador a seguir o padrão do projeto
+- Ex: ![Images](imgs/interface.png)
+- Temos uma Interface BasicoDAO que dirá aos programadores do nosso projeto o que suas classes DAO devem ter.
+- Para realizar o CRUD de Funcionários, ele implementa a interface acima e ainda adiciona métodos a parte.
+![Images](imgs/codigoInterface.png)
+
+# Exemplo Interface
+- ![Images](imgs/interface-exercicios.png)
+- Implemente interface de nome Forma onde são declarados dois métodos abstractos:
+    - float calcularArea();
+    - float calcularPerimetro();
+- A classe ``Retangulo`` deve implementar os métodos *calcularArea()* e *calcularPerimetro()*. Deve ter atributo largura e altura do tipo float.
+- A classe ``Circulo`` é uma subclasse de Forma e deve implementar os métodos *calcularArea()* e calcular perímetro. Adicione o raio como atributo.
+-  classe ``Quadrado`` é uma subclasse de ``Retangulo``. Não tem nenhum atributo específico, porém a largura e a altura tem o mesmo tamanho.
+- Todas as classes devem implementar um construtor.
+- Todas as classes deve implementar um método toString(), informando o tipo da Forma, a área e o perímetro.
+- Crie um arquivo Exercicio03.java, onde você irá declarar um array de Formas, do tamanho 03.
+    - 1º - Círculo(Raio: 10)
+    - 2º - Retângulo(Lado: 20, Altura:30);
+    - 3º - Quadrado(Lado: 20)
+- Faça um laço de repetição que percorra o array e imprima cada elemento
+
+## Forma.java
+```java
+package Aula03.classes;
+
+public interface Forma {
+    float calcularArea();
+
+    float calcularPerimetro();
+}
+```
+## Retangulo.java
+```java
+package Aula03.classes;
+
+public class Retangulo implements Forma {
+    private float largura;
+    private float altura;
+
+    public Retangulo(float largura, float altura){
+        this.largura = largura;
+        this.altura = altura;
+    };
+
+    public float calcularArea(){
+        return largura*altura;
+    }
+
+    public float calcularPerimetro(){
+        return 2*(largura+altura);
+    }
+
+    @Override
+    public String toString() {
+        return "RETANGULO [\n"+
+                "AREA: "+ this.calcularArea() + "\n"+
+                "PERIMETRO: "+ this.calcularPerimetro() + "\n" + 
+                "]";
+    }
+}
+```
+## Circulo.java
+```java
+package Aula03.classes;
+import java.lang.Math;
+public class Circulo implements Forma {
+       private float raio;
+
+    public Circulo(float raio){
+        this.raio = raio;
+    }
+    public float calcularArea(){
+        return (float)Math.PI*raio*raio;
+    }
+
+    public float calcularPerimetro(){
+        return 2*(float)Math.PI*raio;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "CIRCULO [\n"+
+                "AREA: "+ this.calcularArea() + "\n"+
+                "PERIMETRO: "+ this.calcularPerimetro() + "\n" + 
+                "]";
+    }
+    
+}
+```
+## Quadrado.java
+```java
+package Aula03.classes;
+
+public class Quadrado extends Retangulo{
+    private float lado;
+
+    public Quadrado(float lado) {
+        super(lado, lado);
+        //TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public String toString() {
+        return "QUADRADO [\n"+
+                "AREA: "+ this.calcularArea() + "\n"+
+                "PERIMETRO: "+ this.calcularPerimetro() + "\n" + 
+                "]";
+    }
+}
+```
+## Main2.java
+```java
+package Aula03;
+import Aula03.classes.*;
+public class Main2 {
+    public static void main(String[] args) {
+        Circulo c = new Circulo(10);
+        Retangulo r = new Retangulo(20,30);
+        Quadrado q = new Quadrado(20);
+
+        Forma[] formas = {c,q,r};
+
+        for(int i = 0 ; i<formas.length ; i++){
+            System.out.println(formas[i]);
+        }
+    }
+    
+}
+```
