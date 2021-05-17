@@ -1,10 +1,7 @@
-# Herança
-## <li>Herança é uma forma de reutilização de software, onde uma nova classe é criada absorvendo dados de uma classe existente.</li>
-## <li>A classe nova é chamada de SUBCLASSE, já a classe antiga, que é absorvida pela nova, é chamada de SUPERCLASSE </li>
-## <li> A herança pode se dar em vários níveis, formando uma hierarquia</li>
-## <li>A classe filha terá todos os atributos e métodos da classe pai </li>
-## <li>Vamos implementar o seguinte modelo: </li>
+# Classes e Herança
+- ![Images](imgs/slide01.png)
 
+- Vamos implementar o seguinte modelo:
 <center><img src="imgs/heranca.png" ></center>
 
 # Pessoa.java
@@ -237,7 +234,7 @@ public class Main {
 - Observe na saída, que os atributos de pessoa também são iniciados.
 # Classes abstratas
 - As classes abstratas servem como “modelo” para outras classes. Informam como as classes devem se informam. 
-- Classes abstratas são classes que não podem ser instanciadas. 
+- Classes abstratas são classes que NÃO PODEM SER INSTACIADAS.
 - Identificamos uma classe como abstrata pelo modificador `abstract`.
 ## Exemplo
 <center><img src="imgs/heranca.png" ></center>
@@ -342,3 +339,7 @@ public class Main {
 ```
 - Obtemos como saída: ![Image](imgs/shell01.png)
 
+# Interfaces
+- Fornecem uma especificação sem uma implementação. 
+- Interfaces são totalmente abstratas
+- Suportam polimorfismo
