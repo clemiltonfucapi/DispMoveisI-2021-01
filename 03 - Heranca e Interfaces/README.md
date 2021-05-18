@@ -508,45 +508,49 @@ public class Main {
 - Faça um laço de repetição que percorra o array e imprima cada elemento
 
 ## Forma.java
-```java
-package Aula03.classes;
+    ```java
+    package Aula03.classes;
 
-public interface Forma {
-    float calcularArea();
+    public interface Forma {
+        float calcularArea();
 
-    float calcularPerimetro();
-}
-```
+        float calcularPerimetro();
+    }
+    ```
+    - Criamos a interface forma com dois métodos:
+        - ``calcularArea()``
+        - ``calcularPerimetro()``
 ## Retangulo.java
-```java
-package Aula03.classes;
+    ```java
+    package Aula03.classes;
 
-public class Retangulo implements Forma {
-    private float largura;
-    private float altura;
+    public class Retangulo implements Forma {
+        private float largura;
+        private float altura;
 
-    public Retangulo(float largura, float altura){
-        this.largura = largura;
-        this.altura = altura;
-    };
+        public Retangulo(float largura, float altura){
+            this.largura = largura;
+            this.altura = altura;
+        };
 
-    public float calcularArea(){
-        return largura*altura;
+        public float calcularArea(){
+            return largura*altura;
+        }
+
+        public float calcularPerimetro(){
+            return 2*(largura+altura);
+        }
+
+        @Override
+        public String toString() {
+            return "RETANGULO [\n"+
+                    "AREA: "+ this.calcularArea() + "\n"+
+                    "PERIMETRO: "+ this.calcularPerimetro() + "\n" + 
+                    "]";
+        }
     }
-
-    public float calcularPerimetro(){
-        return 2*(largura+altura);
-    }
-
-    @Override
-    public String toString() {
-        return "RETANGULO [\n"+
-                "AREA: "+ this.calcularArea() + "\n"+
-                "PERIMETRO: "+ this.calcularPerimetro() + "\n" + 
-                "]";
-    }
-}
-```
+    ```
+    - Criamos a classe retangulo com os métodos implementados da interface.
 ## Circulo.java
 ```java
 package Aula03.classes;
