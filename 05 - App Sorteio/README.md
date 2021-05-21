@@ -322,4 +322,6 @@ Fazer o seguinte app:
 - Caso o valor do real esteja vazio, mostre um Toast.
 - Em baixo deve mostrar em 2 TextView o valor em Dolar e em Euros
 - Mude as cores do aplicativo.
-- Os valores devem ser convertidos em duas casas decimais
+    - A cor do botão pode ser mudada pelo atributo: ``android:background``
+    - As cores da barra superior e cor do EditText selecionado pode ser mudada no arquivo ``colors.xml``
+- Os valores devem ser convertidos em duas casas decimais( https://pt.stackoverflow.com/questions/30701/formata%C3%A7%C3%A3o-de-um-double-em-java)
