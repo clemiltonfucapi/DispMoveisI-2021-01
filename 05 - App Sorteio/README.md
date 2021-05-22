@@ -324,4 +324,4 @@ Fazer o seguinte app:
 - Mude as cores do aplicativo.
     - A cor do botão pode ser mudada pelo atributo: ``android:background``
     - As cores da barra superior e cor do EditText selecionado pode ser mudada no arquivo ``colors.xml``
-- Os valores devem ser convertidos em duas casas decimais( https://pt.stackoverflow.com/questions/30701/formata%C3%A7%C3%A3o-de-um-double-em-java)
+- Os valores devem ser convertidos em duas casas decimais(https://mkyong.com/java/java-display-double-in-2-decimal-points/)
