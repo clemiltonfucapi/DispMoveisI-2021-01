@@ -138,13 +138,16 @@
         android:text="Sexo: "
         android:textSize="18sp"/>
         <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
             <RadioButton
+                android:id="@+id/radioM"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Masculino"/>
             <RadioButton
+                android:id="@+id/radioF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Feminino"/>
