@@ -536,3 +536,12 @@ public class MainActivity extends AppCompatActivity {
 # Codigo final:
 > https://gist.github.com/clemiltonfucapi/b395e5c161287c910f0dd3840aa429b2 
 
+# Exercício - Projeto Pedidos
+
+## Parte 01
+- Desenvolver o seguinte layout:
+<center><img src="imgs/img15.png"/></center>
+- O comportamento do layout deve seguir o vídeo:
+
+### Video https://drive.google.com/file/d/1VJKrLEIfTURzQfeiqX6aB3aimwfuq-8Y/view?usp=sharing
+
