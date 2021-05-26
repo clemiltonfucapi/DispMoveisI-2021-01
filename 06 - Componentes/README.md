@@ -545,3 +545,30 @@ public class MainActivity extends AppCompatActivity {
 
 ### Video https://drive.google.com/file/d/1VJKrLEIfTURzQfeiqX6aB3aimwfuq-8Y/view?usp=sharing
 
+## Parte 02
+- Fazer o seguinte comportamento no layout
+https://drive.google.com/file/d/1UeHjYYJsyI61hp9sEuvK1q-lY4jJBRQj/view?usp=sharing
+
+- Os preços base são definidos da seguinte maneira:
+    - Pizza Pequena: R$ 25,00
+    - Pizza Média:  R$ 35,00
+    - Pizza Grande: R$ 65,00;
+
+- Cada sabor é adicionado: 
+    - Calabresa - R$ 5
+	- Portuguesa - R$ 7,5
+	- Frango Catupiry - R$ 5,0
+	- 4 Queijos - R$ 10,0
+	- Muçarela - R$ 5,0
+	- Vegetariana - R$ 15,0
+	- Margherita - R$ 15,0
+	- Banana - R$ 10,0
+	- Chocolate - R$ 10,0
+	- Atum - R$ 10,0
+- A pizza pequena só pode ter 1 sabor
+- A pizza média pode ter até 2 sabores
+- A pizza grande pode ter até 4 sabores
+
+### Utilize os seguintes arquivos auxiliares:
+- https://gist.github.com/clemiltonfucapi/c3188f98e9a50bc0804d72567d108960
+
