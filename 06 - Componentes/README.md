@@ -572,3 +572,47 @@ https://drive.google.com/file/d/1UeHjYYJsyI61hp9sEuvK1q-lY4jJBRQj/view?usp=shari
 ### Utilize os seguintes arquivos auxiliares:
 - https://gist.github.com/clemiltonfucapi/c3188f98e9a50bc0804d72567d108960
 
+
+## Lógica para sabores na descrição:
+- 1º Adicionar atributos em  MainActivity.java:
+```java
+    ...
+    /* O vetor sabores deve guardar quais sabores estão selecionados na pizza. Cada elemento do
+    vetor representa um sabor:
+        0 - Calabresa, 1 - Portuguesa, 2 - Frango Catupiry, 3 - 04 Queijos, 4 - Muçarela, 
+        5 - Vegetariana 6 - Margherita , 7 - Banana, 8 - Chocolate, 9 - atum 
+    - Quando um desses sabores for marcado, o elemento deve ser marcado como true. 
+    - QUando um sabor for desmarcado, o elemento deve ser marcado como false.
+    */
+    private boolean[] sabores = {false,false,false,false,false,false,false,false,false,false};
+    /* O vetor de strings armazena os id's das Strings que contém a descrição de cada sabor. 
+    A ideia é utilizar este vetor para recuperar as Strings dos sabores que estao marcados como true*/
+    private int[] vStrings = {
+        R.string.desc_calabresa,
+        R.string.desc_portuguesa,
+        R.string.desc_frango_catupiry,
+        R.string.desc_04queijos,
+        R.string.desc_mucarela,
+        R.string.desc_vegetariana,
+        R.string.desc_margherita,
+        R.string.desc_banana,
+        R.string.desc_chocolate,
+        R.string.desc_atum
+    };
+    ...
+```
+
+- A logica mostrar um sabor é descrita abaixo
+```java
+    textTotal.setText("Total: R$"+valorTotal.toString());
+    //Logica para descricao dos sabores
+    /***
+        - Criar uma String vazia, para acumular a descrição do sabor
+        - Percorrer o vetor de sabores (  for, while, etc...).
+            - Se o sabor estiver marcado(true)
+                - Acumular na String a descrição do sabor (OBS: Utilizar método getString())
+        
+        2.Após terminar o laço, setar a string no TextView de descrição.
+        ***/
+    
+```
