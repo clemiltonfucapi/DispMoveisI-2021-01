@@ -1,4 +1,22 @@
 # RecyclerView - Listagem de Itens:
+## Conceitos básicos
+# 
+- A listagem de items é um dos recursos mais utilizados em android
+<center><img src="imgs/img01b.png"/></center>
+
+## Exemplo de uma ListView:
+- <center><img src="imgs/img02b.png"/></center>
+
+    -  Observe que cada item da ListView tem um layout específico.
+
+## O que é um Adapter?
+<center><img src="imgs/img03b.png"/></center>
+
+- é um Padrão de Projeto(GoF) que converte a interface de uma classe para outra interface.
+-  Os itens  são inseridos na ListView usando um **Adapter** que é responsável por gerenciar e adaptar os dados
+- Os dados geralmente estão dentro de um `ArrayList<T>`:
+
+
 - Crie um novo projeto chamado Lista de tarefas.
 - Criar um novo pacote chamado ``model`` e inserir criar uma classe ``Tarefa``
     - ![Images](imgs/img02.png)
