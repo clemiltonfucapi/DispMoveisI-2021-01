@@ -260,3 +260,163 @@ public class MainActivity extends AppCompatActivity {
 
     }
 ```
+#
+# Aula 31-05 - Eventos de click na RecyclerView
+- Código até o momento: https://gist.github.com/clemiltonfucapi/d0ceb468646d23ff54da923fb5af5e98
+- 
+- Agora vamos começar a implementar o evento de cliques em cada elemento. A RecyclerView não tem configurado o evento de click por padrão. Porém podemos configurar o click no código da ``ViewHolder``: 
+    ```java
+    /* Classe ViewHolder -> Representa um elemento da recycler*/
+    public class TarefaVH extends RecyclerView.ViewHolder{
+        TextView textTarefa;
+        public TarefaVH(@NonNull View itemView) {
+            super(itemView);
+            textTarefa = itemView.findViewById(R.id.nomeTarefa);
+            /* adicionando evento em itemView*/
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getBindingAdapterPosition();
+                    Toast.makeText(context, "Posicao: "+position, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+    }
+    ```
+    - O código acima funciona, porém o ideal é a implementação do método onClick seja feita na Activity, para que o codigo da Recycler seja reaproveitável.
+- Vamos resolver esse problema através de uma interface. Crie um novo arquivo chamado ``OnItemClickListener.java``:
+    - ![Images](imgs/img07.png)
+    ```java
+    package com.example.listadetarefas2.adapter;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+        
+    }
+    ```
+    - Esta interface será utilizada de ponte entre a ``Activity`` e cada elemento ``ViewHolder``. 
+- Criar um atributo do tipo ``OnItemClickListener``
+```java
+public class TarefaAdapter extends RecyclerView.Adapter<TarefaAdapter.TarefaVH> {
+    private Context context;
+    private ArrayList<Tarefa> listaTarefas;
+    private OnItemClickListener listener;
+    /* setter do listerner*/
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+    ....
+}
+```
+- Agora vamos modificar o código da ``ViewHolder``, associando a interface que nós criamos com o evento de clique.
+    ```java
+    public TarefaVH(@NonNull View itemView) {
+        super(itemView);
+        textTarefa = itemView.findViewById(R.id.nomeTarefa);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener!=null){
+                    int position = getBindingAdapterPosition();
+                    /* associação interface<->onClick*/ 
+                    listener.onItemClick(position);
+                }
+
+            }
+        });
+    }
+    ```
+- Agora vamos implementar o evento de click em ``MainActivity.java``
+```java
+
+public class MainActivity extends AppCompatActivity {
+    .....
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        ......
+        //setando o gerenciador de layouts
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        TarefaAdapter tarefaAdapter = new TarefaAdapter(getApplicationContext(),listaTarefas);
+        /* implementando evento de click */
+        tarefaAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Tarefa tarefa = listaTarefas.get(position);
+                Toast.makeText(getApplicationContext(),tarefa.getTarefa() + position,Toast.LENGTH_SHORT).show();
+            }
+        });
+        //setando adapter
+        recyclerView.setAdapter(tarefaAdapter);
+        //criando um separador de itens
+        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
+    }
+    ....
+}
+```
+- Agora vamos adicionar um botão flutuante no Layout. Vamos criar um elemento ``drawable``
+    - ![Images](imgs/drawable_+.png)
+    - Código Gerado:
+    ```xml
+    <vector android:height="24dp" android:tint="#FFFFFF"
+    android:viewportHeight="24.0" android:viewportWidth="24.0"
+    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+        <path android:fillColor="#FF000000" android:pathData="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+    </vector>
+    ```
+    
+- Vamos mudar o layout da activity_main.xml. Primeiro vamos criar um novo layout chamado ``content_main.xml``:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerTarefas"
+        tools:listitem="@layout/item_tarefa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+- Adicione um FloatActionButton no Layout(``activity_main.xml``):
+    - ![Images](imgs/fab.png)
+- Altere o layout para ``FrameLayout``
+    - ![Images](imgs/img08.png)
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/content_main"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_add_24dp" />
+</FrameLayout>
+```
+
+
