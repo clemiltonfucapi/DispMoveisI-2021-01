@@ -1,4 +1,29 @@
 # RecyclerView - Listagem de Itens:
+# Teoria
+- O RecyclerView é uma atualização do ListView e também do GridView, os quais estão presentes desde as versões iniciais do Android
+- A principal vantagem em se utilizar o RecyclerView,  é o controle de “reciclagem” de um item dentro da View aonde este é exibido, isto é, os itens que não estão mais visíveis em uma lista são “reciclados” para criar os novos itens que estarão dispostos na tela.
+<center><img src="./imgs/how_it_works.png"/></center>
+
+## Componentes RecyclerView:
+- Os Principais componentes da RecyclerView são:
+    - RecyclerView
+    - Adapter
+    - ViewHolder
+    - LayoutManager
+    <center><img src="./imgs/componentes.png"/></center>
+### RecyclerView
+- Componente visual que ficará na *Activity/Fragment* e irá posicionar a lista na tela do usuário, assim como um campo de texto ou botão, por exemplo.
+### Adapter
+- Classe responsável por associar a lista de conteúdo/objeto à view correspondente. Onde cada objeto da lista será um item na lista. É no Adapter onde se define se um item será exibido ou não.
+
+### ViewHolder
+- É a referência para a view que é a parte visual de cada item da lista, que será replicada para todos elementos (na estrutura acima, ficaria dentro do Adapter).
+
+### LayoutManger
+- Define qual será a posição dos itens na lista (se será uma lista horizontal, vertical, uma grade e etc).
+- Com essa flexibilidade podemos mudar a disposição dos itens de acordo com a configuração do usuário sem a necessidade de recriar toda a estrutura do RecyclerView em tempo de execução.
+
+# Implementação
 - Crie um novo projeto chamado Lista de tarefas.
 - Criar um novo pacote chamado ``model`` e inserir criar uma classe ``Tarefa``
     - ![Images](imgs/img02.png)
@@ -36,9 +61,11 @@
 
         public void preencherLista(){
             /* 1º - Estático, depois B.D */
-            listaTarefas.add(new Tarefa("Corrida"));
-            listaTarefas.add(new Tarefa("Supermercado"));
-            listaTarefas.add(new Tarefa("Fucapi"));
+            for(int i =0; i <30 ; i++){
+                listaTarefas.add(new Tarefa("Corrida"));
+                listaTarefas.add(new Tarefa("Supermercado"));
+                listaTarefas.add(new Tarefa("Fucapi"));
+            }
         }
     }
     ```
@@ -76,13 +103,18 @@
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android" 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:padding="5dp">
         <TextView
             android:id="@+id/nomeTarefa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="Tarefa"
             android:textStyle="bold"
             />
@@ -148,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         private ArrayList<Tarefa> listaTarefas;
         
         //construtor
-        public TarefaAdapter(Context context, ArrayList<Tarefa> listaTarefas){
+        public TarefaAdapter(Context context, ArrayList<Tarefa> lista){
             this.context = context;
             this.listaTarefas = listaTarefas;
         }
@@ -171,7 +203,9 @@ public class MainActivity extends AppCompatActivity {
         .....
 
     ```
-    - Criamos dois atributos, ``context`` e ``listaTarefas``. O atributo ``context`` guarda um objeto do tipo ``Context`` para ser utilizado fora da activity. O atributo ``listaTarefas`` guarda os dados das tarefas.
+    - Criamos dois atributos, ``context`` e ``listaTarefas``.
+    - O atributo ``context`` guarda um objeto do tipo ``Context`` para ser utilizado fora da activity. A classe contexto permite acesso à recursos e classes específicas do Android: Ex: Iniciar Activities, BroadCast, etc. Neste caso, vamos utilizar para inflar as Views e criar eventos de clique.
+    - O atributo ``listaTarefas`` guarda os dados das tarefas.
     - O construtor inicializa os atriubutos
 - Agora vamos implementar os métodos do ``TarefaAdapter``
 - ``getItemCount()``
