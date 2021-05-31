@@ -1,5 +1,5 @@
-# RecyclerView - Listagem de Itens:
-# Teoria
+
+# RecyclerView - Teoria
 - O RecyclerView é uma atualização do ListView e também do GridView, os quais estão presentes desde as versões iniciais do Android
 - A principal vantagem em se utilizar o RecyclerView,  é o controle de “reciclagem” de um item dentro da View aonde este é exibido, isto é, os itens que não estão mais visíveis em uma lista são “reciclados” para criar os novos itens que estarão dispostos na tela.
 <center><img src="./imgs/how_it_works.png"/></center>
@@ -14,7 +14,11 @@
 ### RecyclerView
 - Componente visual que ficará na *Activity/Fragment* e irá posicionar a lista na tela do usuário, assim como um campo de texto ou botão, por exemplo.
 ### Adapter
-- Classe responsável por associar a lista de conteúdo/objeto à view correspondente. Onde cada objeto da lista será um item na lista. É no Adapter onde se define se um item será exibido ou não.
+<center><img src="imgs/img03b.png"/></center>
+
+- é um Padrão de Projeto(GoF) que converte a interface de uma classe para outra interface.
+-  Os itens  são inseridos na ListView usando um **Adapter** que é responsável por gerenciar e adaptar os dados
+- Os dados geralmente estão dentro de um `ArrayList<T>`:
 
 ### ViewHolder
 - É a referência para a view que é a parte visual de cada item da lista, que será replicada para todos elementos (na estrutura acima, ficaria dentro do Adapter).
@@ -24,6 +28,7 @@
 - Com essa flexibilidade podemos mudar a disposição dos itens de acordo com a configuração do usuário sem a necessidade de recriar toda a estrutura do RecyclerView em tempo de execução.
 
 # Implementação
+
 - Crie um novo projeto chamado Lista de tarefas.
 - Criar um novo pacote chamado ``model`` e inserir criar uma classe ``Tarefa``
     - ![Images](imgs/img02.png)
