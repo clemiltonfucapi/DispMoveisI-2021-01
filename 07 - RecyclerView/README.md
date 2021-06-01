@@ -395,7 +395,22 @@ public class MainActivity extends AppCompatActivity {
 ```
 - Adicione um FloatActionButton no Layout(``activity_main.xml``):
     - ![Images](imgs/fab.png)
-- Altere o layout para ``FrameLayout``
+    - Este botão adiciona uma dependência no projeto em ``build.gradle(app)``
+    ```gradle
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+        implementation 'androidx.appcompat:appcompat:1.3.0'
+        implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+        implementation 'androidx.recyclerview:recyclerview:1.2.0'
+        /* dependência do FloatActionButton */
+        implementation 'com.google.android.material:material:1.3.0'
+    }
+    ```
+- Altere ``activity_main.xml`` para ``FrameLayout``
     - ![Images](imgs/img08.png)
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -415,8 +430,140 @@ public class MainActivity extends AppCompatActivity {
         android:layout_margin="16dp"
         android:layout_gravity="bottom|end"
         android:clickable="true"
-        app:srcCompat="@drawable/ic_add_24dp" />
+        android:src="@drawable/ic_add_24dp" />
 </FrameLayout>
 ```
+- O layout deve ficar assim: 
+    - ![Images](imgs/img09.png)
+- Crie uma nova Activity chamada ``AdicionarActivity``:
+    - File > New > Activity > Empty Activity
+    - Resultado: ![Images](imgs/img10.png)
+- Vamos adicionar um evento de clique no ``FloatActionButton`` para abrir a nova activity.
+- ``MainActivity.java``: Adicione o atributo do botão e findViewById:
+    ```java
+    public class MainActivity extends AppCompatActivity {
+        private ArrayList<Tarefa> listaTarefas = new ArrayList<>();
+        private RecyclerView recyclerView;
+        /* atributo */
+        private FloatingActionButton fab;
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            recyclerView = findViewById(R.id.recyclerView);
+            /* findViewById do fab*/
+            fab= findViewById(R.id.floatingActionButton);
+    ```
+- ``MainActivity.java``: Adicionar evento de clique no botão
+    ```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        recyclerView = findViewById(R.id.recyclerView);
+        fab= findViewById(R.id.floatingActionButton);
+
+        .......
+        /* Evento de clique */
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* Criando Intenção para abrir nova activity */
+                Intent intent = new Intent(getApplicationContext(),AdicionarActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+    }
+    ```
+    - Um Intent é um objeto que fornece vínculos de tempo de execução entre componentes separados, como duas atividades. 
+    - O Intent representa a intenção do app de fazer algo
+    -  Você pode usar intents para uma ampla variedade de tarefas, mas, nesta lição, a intent iniciará outra atividade.
+- Agora vamos fazer o layout ``activity_adicionar.xml``:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdicionarActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textTarefa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Digite uma tarefa" />
+    </com.google.android.material.textfield.TextInputLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+- Agora vamos criar um menu em ``AdicionarActivity``. Primeiro crie a seguinte estrutura nas pasta ``res``
+    - ![Images](imgs/img11.png)
+    - File > New > Android Resourse Directory > Selecione a opção "Resource Type" para menu
+    - Crie um arquivo na pasta menu chamado ``menu_adicionar.xml``
+- Crie um novo ``Vector Asset`` na pasta drawable: ![Images](imgs/check_menu.png)
+- ``menu/menu_adicionar.xml``: Adicione um item no menu:
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item
+            android:id="@+id/itemSalvar"
+            android:title="Salvar"
+            android:icon="@drawable/ic_check_black_24dp"
+            android:orderInCategory="100"
+            app:showAsAction="always"
+            />
+    </menu>
+    ```
+    - ``android:icon``: seta o icone do item.
+    - ``android:orderInCategory``: seta a ordem em que o item irá aparecer no menu. Por padrão colocamos numeros com 3 dígitos variando de 100 em 100 (Ex: 1º Item - 100, 2º Item - 200).
+    - ``app:showAsAction``: Seta se a opção irá ficar na ``ActionBar``, ou no menu de opções.
+- O Menu acima deve ficar assim no modo Design: 
+    - ![Images](imgs/img12.png)
+- ``AdicionarActivity``: Vamos adicionar dois métodos para configurar o menu
+    ```java
+    public class AdicionarActivity extends AppCompatActivity {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_adicionar);
+        }
+
+        /* Criação de menu */
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            getMenuInflater().inflate(R.menu.menu_adicionar,menu);
+            return super.onCreateOptionsMenu(menu);
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+            switch(item.getItemId()){
+                case R.id.itemSalvar:
+                    Toast.makeText(this,"Salvar",Toast.LENGTH_SHORT).show();
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+    ```
+    - Foram criados dois métodos para configurar o menu:
+        - ``onCreateOptionsMenu(Menu menu)``
+        - ``onOptionsItemSelected(@NonNull MenuItem item)``
+    - ``onCreateOptionsMenu(Menu menu)``: este método é utilizado para criar o Menu. Nele inflamos o layout XML feito anteriormente no parâmetro Menu.
+    - ``onOptionsItemSelected(@NonNull MenuItem item)``: Esse método é executado, toda vez que um item do menu é clicado. Na implementação dele, temos um switch-case, onde verificamos qual item foi clicado.
+
+
 
 
