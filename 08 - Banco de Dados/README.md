@@ -299,4 +299,4 @@ public class MainActivity extends AppCompatActivity {
     - Depois atualizamos a lista através do método ``setListaTarefas``
     - O método ``notifyDataSetChanged()``, avisa o adapter que os dados mudaram e com isso atualiza a ``recyclerView``
 - Execute o app e verifique se ele funciona!
-
+- Link para o Projeto até o momento: https://github.com/clemiltonfucapi/DispMoveisI-2021-01/raw/main/08%20-%20Banco%20de%20Dados/ListaTarefas.rar
