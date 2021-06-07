@@ -165,7 +165,55 @@
     - No código acima o método ``dividir()`` lança uma exceção caso o divisor seja igual a zero. Observe que não tratamos a exceção no método, jogando a responsabilidade de tratar a exceção para quem for chamar o método ``dividir()``
 
 # Hierarquia das exceptions
+A princípio, Java possui diversos tipos específicos de exceção, cada um deles diretamente relacionado a uma operação específica, por este motivo para que uma classe seja considerada uma exceção é imprescindível que ela de alguma forma seja filha de ``java.lang.Exception``. As exceções são dividas em:
+- Checked Exceptions
+- Unchecked Exceptions
+- No quadro abaixo, temos um exemplo da hierarquia de algumas subclasses de Exception: ![Images](print03.png)
 
+# Checked Exceptions
+- As checked exceptions, são exceções já previstas pelo compilador. 
+- Usualmente são geradas pela palavra chave ``throw``
+- Como ela é prevista já em tempo de compilação, se faz necessária a utilização do bloco ``try/catch`` ou da palavra chave ``throws``.
+- A princípio, todas as classes filhas de Exception são do tipo checked, exceto pelas subclasses de ``java.lang.RuntimeException``
+
+# Unchecked Exceptions
+- O programador não é obrigado a tratar a exceção. Não são checadas no tempo de compilação.
+- São subclasses de RuntimeException, e geralmente são implementadas usando ArithmeticException, NullPointerException, ou IllegalStateException;
+
+# Exercício 03:
+1. Explique o bloco de Tratamento de Exceções (try...catch...finally...)
+2. Explique a forma de lançamento de uma Exceção (throw new...).
+3. Explique o funcionamento da Propagação de Exceções (throws).
+4. Considere o código abaixo:
+
+    ```java
+    class Exercicio03 {
+    public static void main(String[] args) {
+        
+        String[] a = {"ABC","123","0",""};
+        for(int i=0; i< 4 ; i++){
+        try{
+            String s = a[i];
+            System.out.println("\t s: "+ s);
+            int n = Integer.parseInt(s);
+            System.out.println("\t m: "+n);
+            int m = 1234/n;
+            System.out.println("\t m: "+m);
+        }catch(NumberFormatException e){
+            System.err.println(e);
+        }catch(ArrayIndexOutOfBoundsException e){
+            System.err.println(e);
+        }catch(ArithmeticException e){
+            System.err.println(e);
+        }finally{
+            System.out.println("\t i: "+i);
+        }
+        }
+        
+    }
+    }
+    ```
+    - Execute o programa acima e explique as exceções e quando elas são executadas
 # Referências
 - https://www.devmedia.com.br/tratando-excecoes-em-java/25514
 - http://www.universidadejava.com.br/java/java-excecoes/
