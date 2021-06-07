@@ -150,6 +150,7 @@
     ```
     - Este método primeiro faz uma verificação se o usuário preencheu o campo tarefa.
     - O método ``TarefaDAO.salvar()`` é chamado para salvar uma tarefa. Caso dê certo, um Toast será exibido.
+    - O método ``finish()`` finaliza a activity.
 - Ao iniciar o app e entrar em ``AdicionarActivity``, o banco é criado: ![Images](imgs/img03.png)
 - Ao salvar uma tarefa obtemos o seguinte ``Toast``: 
     - ![Images](imgs/img04.png)
@@ -226,4 +227,76 @@ public class Tarefa {
     ```
     - Percorremos o cursor através do método ``moveToNext()``
     - Ao final do ``while``, vamos ter um ``ArrayList<Tarefa>``
+- Agora vamos listar na recyclerView as tarefas. Modifique o método ``prencherLista()`` em ``MainActivity.java``:
+```java
+public void preencherLista(){
+    TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+    listaTarefas = tarefaDAO.listarTarefas();
+}
+```
+- Este método é chamado no ``onCreate()`` antes de carregar a recycler. Execute o app e veja se funciona:
+    - ![Images](imgs/img05.png)
+    - Observe que a mensagem de sucesso aparece porém não foi mostrado nenhuma tarefa. Feche e abra o app e veja o que acontece.
+- Os dados agora aparecem:
+    - ![Images](imgs/img06.png)
+    - Isto ocorre por conta do **CICLO DA ACTIVITY**. O método onCreate é executado apenas uma única vez ao iniciar o app. Logo o carregamento das tarefas ocorrem apenas no inicio do app. Quando vamos adicionar uma nova tarefa, a lista não é atualizada.
+- Abaixo temos um diagrama que representa o ciclo de vida da Activity:
+    - ![Images](imgs/img07.png)
+    - Quando a activity inicia os seguintes métodos são executadas na ordem:
+        - 1º ``onCreate()``
+        - 2º ``onStart()``
+        - 3º ``onResume()`` 
+    - Quando vamos para a ``AdicionarActivity``, a ``MainActivity`` fica executando em *background* e o método ``onStop()`` é executado.
+    - Quando a ``MainActivity`` volta para o foco os métodos ``onRestart()`` e ``onStart()`` são executados em sequência. Observe que o ``onCreate()``, não é chamado novamente. 
+- Então para resolver o *bug*, vamos implementar o método ``onStart()``
+- Vamos precisar transformar o ``Adapter`` em atributo para recarregar a lista:
+```java
+public class MainActivity extends AppCompatActivity {
+    private ArrayList<Tarefa> listaTarefas = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private FloatingActionButton fab;
+    //atributo TarefaAdapter
+    private TarefaAdapter tarefaAdapter;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        recyclerView = findViewById(R.id.recyclerView);
+        fab= findViewById(R.id.floatingActionButton);
+
+        preencherLista();
+        tarefaAdapter = new TarefaAdapter(getApplicationContext(),listaTarefas);
+        ....
+    }
+}
+```
+- Vamos adicionar uma método ``setListaTarefas`` em ``TarefaAdapter``:
+    ```java
+    public class TarefaAdapter extends RecyclerView.Adapter<TarefaAdapter.TarefaVH> {
+        ......
+        /*setter da lista de tarefas */
+        public void setListaTarefas(ArrayList<Tarefa> listaTarefas){
+            this.listaTarefas = listaTarefas;
+        }
+
+    }
+    ```
+    - Esse método será usado para atualizar a lista de tarefas.
+- Implementação do método ``onStart()`` em ``MainActivity.java``:
+    ```java
+    @Override
+    protected void onStart() {
+        super.onStart();
+        TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+        listaTarefas = tarefaDAO.listarTarefas();
+        tarefaAdapter.setListaTarefas(listaTarefas);
+        //notifica adaptar -> dados mudaram
+        tarefaAdapter.notifyDataSetChanged();
+    }
+    ```
+    - Primeiro instaciamos um objeto ``tarefaDAO`` e depois retornamos a lista de tarefas.
+    - Depois atualizamos a lista através do método ``setListaTarefas``
+    - O método ``notifyDataSetChanged()``, avisa o adapter que os dados mudaram e com isso atualiza a ``recyclerView``
+- Execute o app e verifique se ele funciona!
+- Link para o Projeto até o momento: https://github.com/clemiltonfucapi/DispMoveisI-2021-01/raw/main/08%20-%20Banco%20de%20Dados/ListaTarefas.rar
