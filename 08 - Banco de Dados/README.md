@@ -12,7 +12,7 @@
     public class DbHelper extends SQLiteOpenHelper {
         public static int VERSION=1;
         public static String NOME_DB="DB_TAREFAS";
-        
+        public static String TABELA_TAREFAS="tarefas"; 
         public DbHelper(Context context){
             super(context,NOME_DB,null,VERSION);
         }
