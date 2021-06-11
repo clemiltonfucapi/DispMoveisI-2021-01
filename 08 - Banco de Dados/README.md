@@ -87,7 +87,7 @@
         ContentValues cv = new ContentValues();
         cv.put("nome",tarefa.getTarefa());
         try {
-            escreve.insert(DbHelper.TABELA_TAREFAS, null, cv);
+            escreve.insertOrThrow(DbHelper.TABELA_TAREFAS, null, cv);
         }catch(Exception e ){
             Log.e("ERRO BD", "Erro ao salvar a tarefa "+ e.getMessage());
             return false;
